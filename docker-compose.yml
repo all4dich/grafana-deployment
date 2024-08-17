@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  nphub-repo-log-collector-promtail:
+    image: grafana/promtail:2.9.2
+    volumes:
+      - /var/log:/var/log
+      - /home/group.np_app_hub/data/gitlab_home/logs/nginx:/tmp/nginx_gitlab
+      - ./config.yml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
