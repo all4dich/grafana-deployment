@@ -11,6 +11,7 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     volumes:
       - ${HOME}/data/loki:/loki
+      - ./local-config.yaml:/etc/loki/local-config.yaml
     networks:
       - loki
   nphub-repo-log-collector-promtail:
