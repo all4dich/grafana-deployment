@@ -4,7 +4,7 @@ networks:
   loki:
 
 services:
-  nphub-loki:
+  muirwoods-loki:
     image: grafana/loki:2.9.2
     ports:
       - "33100:3100"
@@ -14,7 +14,7 @@ services:
       - ./local-config.yaml:/etc/loki/local-config.yaml
     networks:
       - loki
-  nphub-repo-log-collector-promtail:
+  muirwoods-repo-log-collector-promtail:
     image: grafana/promtail:2.9.2
     volumes:
       - /var/log:/var/log
@@ -23,7 +23,7 @@ services:
     command: -config.file=/etc/promtail/config.yml
     networks:
       - loki
-  nphub-grafana:
+  muirwoods-grafana:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -40,7 +40,7 @@ services:
           type: loki
           access: proxy
           orgId: 1
-          url: http://nphub-loki:3100
+          url: http://muirwoods-loki:3100
           basicAuth: false
           isDefault: true
           version: 1

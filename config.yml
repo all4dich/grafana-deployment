@@ -6,26 +6,25 @@ positions:
   filename: /tmp/positions.yaml
 
 clients:
-  #- url: http://nphub.nota.ai:33100/loki/api/v1/push
-  - url: http://nphub-loki:3100/loki/api/v1/push
+  - url: http://muirwoods-loki:3100/loki/api/v1/push
 
 scrape_configs:
-- job_name: nphub_gitlab_access
+- job_name: muirwoods_gitlab_access
   static_configs:
   - targets:
       - localhost
     labels:
-      job: nphub_gitlab_access
+      job: muirwoods_gitlab_access
       hostname: eve
       __path__: /tmp/nginx_gitlab/gitlab_access.log
   pipeline_stages:
   - match:
-      selector: '{job="nphub_gitlab_access"}'
+      selector: '{job="muirwoods_gitlab_access"}'
       stages:
         - drop:
             expression: '/lfs/'
   - match:
-      selector: '{job="nphub_gitlab_access"}'
+      selector: '{job="muirwoods_gitlab_access"}'
       stages:
         - drop:
             expression: '/gitlab-lfs/'
