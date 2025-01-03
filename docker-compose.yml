@@ -27,7 +27,7 @@ services:
     ports:
       - "33200:9090"
     volumes:
-      - ${HOME}/data/prometheus:/etc/prometheus
+      - ${HOME}/data/prometheus:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - keti-dashboard
