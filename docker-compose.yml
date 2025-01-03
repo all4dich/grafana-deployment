@@ -18,9 +18,17 @@ services:
     image: grafana/promtail:2.9.2
     volumes:
       - /var/log:/var/log
-      - /home/group.np_app_hub/data/gitlab_home/logs/nginx:/tmp/nginx_gitlab
       - ./config.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+  muirwoods-prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "33200:9090"
+    volumes:
+      - ${HOME}/data/prometheus:/etc/prometheus
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - loki
   muirwoods-grafana:
