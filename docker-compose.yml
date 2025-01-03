@@ -1,10 +1,10 @@
 version: "3"
 
 networks:
-  loki:
+  keti-dashboard:
 
 services:
-  muirwoods-loki:
+  keti-loki:
     image: grafana/loki:2.9.2
     ports:
       - "33100:3100"
@@ -13,16 +13,16 @@ services:
       - ${HOME}/data/loki:/loki
       - ./local-config.yaml:/etc/loki/local-config.yaml
     networks:
-      - loki
-  muirwoods-repo-log-collector-promtail:
+      - keti-dashboard
+  keti-repo-log-collector-promtail:
     image: grafana/promtail:2.9.2
     volumes:
       - /var/log:/var/log
       - ./config.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
     networks:
-      - loki
-  muirwoods-prometheus:
+      - keti-dashboard
+  keti-prometheus:
     image: prom/prometheus:latest
     ports:
       - "33200:9090"
@@ -30,8 +30,8 @@ services:
       - ${HOME}/data/prometheus:/etc/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
-      - loki
-  muirwoods-grafana:
+      - keti-dashboard
+  keti-grafana:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -48,7 +48,7 @@ services:
           type: loki
           access: proxy
           orgId: 1
-          url: http://muirwoods-loki:3100
+          url: http://keti-loki:3100
           basicAuth: false
           isDefault: true
           version: 1
@@ -62,4 +62,4 @@ services:
       - ${HOME}/data/grafana:/var/lib/grafana
       - ./grafana.ini:/etc/grafana/grafana.ini
     networks:
-      - loki
+      - keti-dashboard
