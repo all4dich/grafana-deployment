@@ -25,7 +25,7 @@ services:
   keti-prometheus:
     image: prom/prometheus:latest
     ports:
-      - "33200:9090"
+      - "39090:9090"
     volumes:
       - ${HOME}/data/prometheus:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
