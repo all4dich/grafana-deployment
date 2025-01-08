@@ -14,6 +14,7 @@ services:
       - ./local-config.yaml:/etc/loki/local-config.yaml
     networks:
       - keti-dashboard
+    restart: unless-stopped
   keti-repo-log-collector-promtail:
     image: grafana/promtail:2.9.2
     volumes:
@@ -31,6 +32,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
       - keti-dashboard
+    restart: unless-stopped
   keti-grafana:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
@@ -63,3 +65,4 @@ services:
       - ./grafana.ini:/etc/grafana/grafana.ini
     networks:
       - keti-dashboard
+    restart: unless-stopped
