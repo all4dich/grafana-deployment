@@ -1,10 +1,10 @@
 version: "3"
 
 networks:
-  keti-dashboard:
+  local-dashboard:
 
 services:
-  keti-loki:
+  local-loki:
     image: grafana/loki:2.9.2
     ports:
       - "33100:3100"
@@ -13,16 +13,16 @@ services:
       - ${HOME}/data/loki:/loki
       - ./local-config.yaml:/etc/loki/local-config.yaml
     networks:
-      - keti-dashboard
-  keti-repo-log-collector-promtail:
+      - local-dashboard
+  local-repo-log-collector-promtail:
     image: grafana/promtail:2.9.2
     volumes:
       - /var/log:/var/log
       - ./config.yml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
     networks:
-      - keti-dashboard
-  keti-prometheus:
+      - local-dashboard
+  local-prometheus:
     image: prom/prometheus:latest
     ports:
       - "39090:9090"
@@ -30,8 +30,8 @@ services:
       - ${HOME}/data/prometheus:/prometheus
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     networks:
-      - keti-dashboard
-  keti-grafana:
+      - local-dashboard
+  local-grafana:
     environment:
       - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
       - GF_AUTH_ANONYMOUS_ENABLED=true
@@ -48,7 +48,7 @@ services:
           type: loki
           access: proxy
           orgId: 1
-          url: http://keti-loki:3100
+          url: http://local-loki:3100
           basicAuth: false
           isDefault: true
           version: 1
@@ -62,4 +62,4 @@ services:
       - ${HOME}/data/grafana:/var/lib/grafana
       - ./grafana.ini:/etc/grafana/grafana.ini
     networks:
-      - keti-dashboard
+      - local-dashboard

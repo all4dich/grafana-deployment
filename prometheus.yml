@@ -21,8 +21,8 @@ rule_files:
 scrape_configs:
   - job_name: "prometheus"
     static_configs:
-      - targets: ["keti-dashboard.sunjoo.org:39090"]
-  - job_name: "nodes"
-    static_configs:
-      - targets:
-        - deepx-m1.sunjoo.org:39100
+      - targets: ["localhost:39090"]
+#  - job_name: "nodes"
+#    static_configs:
+#      - targets:
+#        - deepx-m1.sunjoo.org:39100
